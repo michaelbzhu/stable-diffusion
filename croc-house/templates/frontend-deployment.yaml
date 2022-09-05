@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: croc-frontend-deployment
+  labels:
+    app: croc-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: croc-frontend
+  template:
+    metadata:
+      labels:
+        app: croc-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: us-west1-docker.pkg.dev/croc-house-hack/croc-repo/frontend:latest
+        ports:
+        - containerPort: 3000
