@@ -1,0 +1,4 @@
+Flask==2.2.2
+Flask-PyMongo==2.3.0
+replicate==0.0.1a15
+packaging==21.3

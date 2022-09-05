@@ -4,8 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Hello, daddy!"
-
+    return "Hello, daddy!\n"
 
 @app.route("/images/get-prediction")
 def getImages():
@@ -14,3 +13,6 @@ def getImages():
     model = replicate.models.get("stability-ai/stable-diffusion")
     output = model.predict(prompt=prompt)
     return output
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: croc-backend-deployment
+  labels:
+    app: croc-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: croc-backend
+  template:
+    metadata:
+      labels:
+        app: croc-backend
+    spec:
+      containers:
+      - name: backend
+        image: us-west1-docker.pkg.dev/croc-house-hack/croc-repo/backend:latest
+        ports:
+        - containerPort: 3000
