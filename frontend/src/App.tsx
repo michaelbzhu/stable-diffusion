@@ -1,11 +1,15 @@
 import { useRef } from 'react'
 import './App.css'
+import { useGameId } from './hooks/useGameId'
 import { useUsername } from './hooks/useUsername'
+import { createGame } from './utils/createGame'
+import { joinGameOnServer } from './utils/joinGame'
 
 function App() {
   const [username, setUsername] = useUsername()
   const usernameRef = useRef<HTMLInputElement>(null)
   const gameIdRef = useRef<HTMLInputElement>(null)
+  const {gameId, leaveGame, joinGame} = useGameId()
 
   const onSetUsername = () => {
     if (usernameRef.current) {
@@ -15,6 +19,15 @@ function App() {
       setUsername('')
     }
   }
+
+  const onJoinGame = (id: number) => {
+    joinGameOnServer(id, username).then((data) => {
+      console.log('response data', data)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+
   console.log(username)
   return (
     <div>
@@ -49,7 +62,14 @@ function App() {
               <button className="my-2 mx-auto block">Join Game</button>
             </div>
 
-            <button className="my-2 block">Create Game</button>
+            <button onClick={() => {
+              createGame().then((id) => {
+                console.log('created room id ', id)
+                onJoinGame(id)
+              }).catch((err) => {
+                console.log(err)
+              })
+            }} className="my-2 block">Create Game</button>
           </div>
           <button onClick={() => setUsername('')}>Logout</button>
         </>

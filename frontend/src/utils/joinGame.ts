@@ -1,5 +1,5 @@
-export async function joinGame(id: number) {
-  const response = await fetch('someserver/join_game', {
+export async function joinGameOnServer(id: number, username: string) {
+  const response = await fetch('http://127.0.0.1:5003/join_game', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -7,18 +7,10 @@ export async function joinGame(id: number) {
       mode: 'no-cors',
     },
     body: `{
-        "prompt": china,
+        "username": ${username},
+        "game_id": ${id}
     }`,
   })
 
-  response
-    .json()
-    .then((data) => {
-      console.log('got back user id ', data)
-      return data
-    })
-    .catch((err) => {
-      console.log(err)
-      return 1
-    })
+  return response.json()
 }
