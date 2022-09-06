@@ -30,9 +30,8 @@ def state():
     return jsonify(db.get_state(game_id))
 
 
-@app.route("/start_game", methods=['POST'])
-def start_game():
-    game_id = request.form.get("game_id")
+@app.route("/start_game/<game_id>", methods=['POST'])
+def start_game(game_id):
     return jsonify(db.start_game(game_id))
 
 @app.route("/prompt", methods=['POST'])

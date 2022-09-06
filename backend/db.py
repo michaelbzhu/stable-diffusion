@@ -53,9 +53,8 @@ def join_game(game_id, username):
     users = get_dict("{}:users".format(game_id))
     users[user_id] = (username, 0)
 
-    print(user_id)
-
-    return r.set("{}:users".format(game_id), dill.dumps(users))
+    r.set("{}:users".format(game_id), dill.dumps(users))
+    return user_id
 
 def start_game(game_id):
     round_ = increment_counter("{}:round".format(game_id))

@@ -1,16 +1,11 @@
 import { useEffect, useRef } from 'react'
-import './App.css'
-<<<<<<< HEAD
-import { useGameId } from './hooks/useGameId'
-import { useUsername } from './hooks/useUsername'
-import { createGame } from './utils/createGame'
-import { joinGameOnServer } from './utils/joinGame'
+import { useUsername } from '../hooks/useUsername'
+import { joinGame } from '../utils/joinGame'
 
-function App() {
+function JoinView() {
   const [username, setUsername] = useUsername()
   const usernameRef = useRef<HTMLInputElement>(null)
   const gameIdRef = useRef<HTMLInputElement>(null)
-  const {gameId, leaveGame, joinGame} = useGameId()
 
   const onSetUsername = () => {
     if (usernameRef.current) {
@@ -19,14 +14,6 @@ function App() {
     } else {
       setUsername('')
     }
-  }
-
-  const onJoinGame = (id: number) => {
-    joinGameOnServer(id, username).then((data) => {
-      console.log('response data', data)
-    }).catch((err) => {
-      console.log(err)
-    })
   }
 
   console.log(username)
@@ -63,14 +50,7 @@ function App() {
               <button className="my-2 mx-auto block">Join Game</button>
             </div>
 
-            <button onClick={() => {
-              createGame().then((id) => {
-                console.log('created room id ', id)
-                onJoinGame(id)
-              }).catch((err) => {
-                console.log(err)
-              })
-            }} className="my-2 block">Create Game</button>
+            <button className="my-2 block">Create Game</button>
           </div>
           <button onClick={() => setUsername('')}>Logout</button>
         </>
@@ -79,4 +59,4 @@ function App() {
   )
 }
 
-export default App
+export default JoinView
