@@ -8,5 +8,5 @@ export function useGameId() {
   const joinGame = (id: number) => {
     setGameId(id)
   }
-  return [gameId, leaveGame, joinGame]
+  return { gameId, leaveGame, joinGame }
 }
