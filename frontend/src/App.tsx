@@ -1,61 +1,43 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import './App.css'
-import { useUsername } from './hooks/useUsername'
+import JoinView from './views/JoinView'
+import { useGameId } from './hooks/useGameId'
+import { useId } from './hooks/useId'
+import { useState } from './hooks/useState'
+import { getState } from './utils/getState'
+import PrompterView from './views/PrompterView'
+import GuesserView from './views/GuesserView'
+import { joinGame } from './utils/joinGame'
 
 function App() {
-  const [username, setUsername] = useUsername()
-  const usernameRef = useRef<HTMLInputElement>(null)
-  const gameIdRef = useRef<HTMLInputElement>(null)
+  const [id, setId] = useId()
+  // const {gameId, leaveGame, joinGame} = useGameId()
+  const [state, setState] = useState()
 
-  const onSetUsername = () => {
-    if (usernameRef.current) {
-      console.log(usernameRef.current.value)
-      setUsername(usernameRef.current.value)
-    } else {
-      setUsername('')
-    }
-  }
-  console.log(username)
-  return (
-    <div>
-      <h1 className="text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-500">
-        Stable Diffusion Guesser
-      </h1>
-      {username === '' ? (
-        <>
-          <input
-            ref={usernameRef}
-            className="p-2 my-2 mx-auto block bg-neutral-100 text-gray-700"
-            type="text"
-            name="username"
-            placeholder="username"
-          />
-          <button className="" onClick={onSetUsername}>
-            Set Username
-          </button>
-        </>
-      ) : (
-        <>
-          <h1 className="text-gray-700">Welcome {username}!</h1>
-          <div className="flex justify-around">
-            <div>
-              <input
-                ref={gameIdRef}
-                className="p-2 my-2 mx-auto block bg-neutral-100 text-gray-700"
-                type="number"
-                name="gameID"
-                placeholder="game id"
-              />
-              <button className="my-2 mx-auto block">Join Game</button>
-            </div>
+  // useEffect(() => {
+  //   if (id !== null && gameId !== null) {
+  //     let interval = setInterval(() => {
+  //       setState(getState(gameId))
+  //     }, 1000);
+  //   }
+  // }, [id])
 
-            <button className="my-2 block">Create Game</button>
-          </div>
-          <button onClick={() => setUsername('')}>Logout</button>
-        </>
-      )}
-    </div>
-  )
+  useEffect(() => {
+    console.log("in use effect");
+    console.log(joinGame(0));
+  })
+
+  // return (
+  //  (state === null ?  
+  //   <JoinView/> : 
+  //   (state.prompt === null ? 
+  //     (state.round_num === id ? 
+  //       <PrompterView/> :
+  //        <></>) : 
+  //     <GuesserView/>))
+  // )
+
+  return (<GuesserView/>)
 }
 
 export default App
