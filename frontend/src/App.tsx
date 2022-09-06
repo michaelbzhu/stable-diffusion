@@ -18,26 +18,30 @@ function App() {
   console.log(username)
   return (
     <div>
-      <h1>Stable Diffusion Guesser</h1>
+      <h1 className="text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-500">
+        Stable Diffusion Guesser
+      </h1>
       {username === '' ? (
         <>
           <input
             ref={usernameRef}
-            className="p-2 my-2 mx-auto block"
+            className="p-2 my-2 mx-auto block bg-neutral-100 text-gray-700"
             type="text"
             name="username"
             placeholder="username"
           />
-          <button onClick={onSetUsername}>Set Username</button>
+          <button className="" onClick={onSetUsername}>
+            Set Username
+          </button>
         </>
       ) : (
         <>
-          <h1>Welcome {username}!</h1>
+          <h1 className="text-gray-700">Welcome {username}!</h1>
           <div className="flex justify-around">
             <div>
               <input
                 ref={gameIdRef}
-                className="p-2 my-2 mx-auto block"
+                className="p-2 my-2 mx-auto block bg-neutral-100 text-gray-700"
                 type="number"
                 name="gameID"
                 placeholder="game id"
