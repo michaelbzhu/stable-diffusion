@@ -1,6 +1,10 @@
 from ntpath import join
 import dill
 import redis
+import numpy as np
+
+from sentence_transformers import SentenceTransformer
+model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
 r = redis.Redis(host='localhost', port=6379)
 
@@ -25,9 +29,13 @@ def get_dict(name):
 
     return dct
 
-def get_val(name, type):
+def get_int(name, if_none=None):
     val = r.get(name)
-    return type(val) if val is not None else None
+    return int(val) if val is not None else if_none
+
+def get_str(name, if_none=None):
+    val = r.get(name)
+    return val.decode() if val is not None else if_none
 
 
 def create_game():
@@ -55,31 +63,41 @@ def start_game(game_id):
     return round_
 
 def set_prompt(game_id, user_id, prompt, image):
-    if int(r.get("{}:round".format(game_id))) != user_id: # TODO FIX THIS
+    if get_int("{}:round".format(game_id), int) != int(user_id): # TODO FIX THIS
         return False
 
     return r.set("{}:prompt".format(game_id), prompt) and r.set("{}:image".format(game_id), image)
 
-def set_guess(game_id, user_id, guess, score):
+def compare_text(t1, t2):
+    return float(np.dot(model.encode(t1), model.encode(t2)))
+
+def set_guess(game_id, user_id, guess):
+    user_id = int(user_id)
     if user_id < 1 or user_id > int(r.get("{}:num_users".format(game_id))):
         return False
-    
+
+    prompt = get_str("{}:prompt".format(game_id))
+    score = compare_text(guess, prompt)
+
     round_data = get_dict("{}:round_data".format(game_id))
 
     if user_id not in round_data or round_data[user_id][0] < score:
         round_data[user_id] = (score, guess)
 
-    return r.set("{}:round_data", dill.dumps(round_data))
+    print(r.set("{}:round_data".format(game_id), dill.dumps(round_data)))
+    print(round_data)
+
+    return guess, prompt, score
 
 def get_state(game_id):
     return {
         'users': get_dict("{}:users".format(game_id)),
-        'round_num': get_val("{}:round".format(game_id), int),
+        'round_num': get_int("{}:round".format(game_id)),
         'round_data': get_dict("{}:round_data".format(game_id)),
-        'prompt': get_val("{}:prompt".format(game_id), str),
-        'image': get_val("{}:image".format(game_id), str)
+        'prompt': get_str("{}:prompt".format(game_id)),
+        'image': get_str("{}:image".format(game_id))
     }
-    
+
     
 if __name__ == "__main__":
     game = create_game()
