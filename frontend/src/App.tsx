@@ -7,8 +7,8 @@ import GuesserView from './views/GuesserView'
 
 function App() {
   return (
-    <div>
-      <h1>Stable Diffusion Guesser</h1>
+    <div className="bg-white">
+      {/* <h1>Stable Diffusion Guesser</h1>
       <input
         className="p-2 my-2 mx-auto block"
         type="text"
@@ -22,7 +22,8 @@ function App() {
         placeholder="game id"
       />
       <button className="my-2 mx-auto block">Join Game</button>
-      <button className="my-2 mx-auto block">Create Game</button>
+      <button className="my-2 mx-auto block">Create Game</button> */}
+      <GuesserView />
     </div>
   )
 }
