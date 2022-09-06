@@ -1,5 +1,5 @@
 export async function createGame() {
-  const response = await fetch('http://127.0.0.1:5003/create_game', {
+  const response = await fetch('http://35.247.125.51:5001/create_game', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

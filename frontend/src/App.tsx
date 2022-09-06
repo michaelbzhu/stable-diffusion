@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import './App.css'
-<<<<<<< HEAD
+import PrompterView from './views/PrompterView'
 import { useGameId } from './hooks/useGameId'
+import { useUserId } from './hooks/useUserId'
 import { useUsername } from './hooks/useUsername'
 import { createGame } from './utils/createGame'
 import { joinGameOnServer } from './utils/joinGame'
@@ -10,7 +11,9 @@ function App() {
   const [username, setUsername] = useUsername()
   const usernameRef = useRef<HTMLInputElement>(null)
   const gameIdRef = useRef<HTMLInputElement>(null)
-  const {gameId, leaveGame, joinGame} = useGameId()
+  const {gameId, setGameId} = useGameId()
+  const {userId, setUserId} = useUserId()
+
 
   const onSetUsername = () => {
     if (usernameRef.current) {
@@ -21,16 +24,18 @@ function App() {
     }
   }
 
-  const onJoinGame = (id: number) => {
-    joinGameOnServer(id, username).then((data) => {
-      console.log('response data', data)
+  const onJoinGame = (gameId: number) => {
+    joinGameOnServer(gameId, username).then((userId) => {
+      console.log('user id', userId)
+      setGameId(gameId)
+      setUserId(userId)
     }).catch((err) => {
       console.log(err)
     })
   }
 
-  console.log(username)
-  return (
+  console.log({username, userId, gameId})
+  const preGame = 
     <div>
       <h1 className="text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-500">
         Stable Diffusion Guesser
@@ -60,7 +65,9 @@ function App() {
                 name="gameID"
                 placeholder="game id"
               />
-              <button className="my-2 mx-auto block">Join Game</button>
+              <button onClick={() => {
+                onJoinGame(Number(gameIdRef.current?.value))
+              }} className="my-2 mx-auto block">Join Game</button>
             </div>
 
             <button onClick={() => {
@@ -76,6 +83,14 @@ function App() {
         </>
       )}
     </div>
+  
+
+  return (
+    
+    <>
+    {(gameId && userId) ?  <PrompterView /> : preGame} 
+    </>
+    
   )
 }
 

@@ -1,5 +1,5 @@
 export async function joinGameOnServer(id: number, username: string) {
-  const response = await fetch('http://127.0.0.1:5003/join_game', {
+  const response = await fetch('http://35.247.125.51:5001/join_game', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

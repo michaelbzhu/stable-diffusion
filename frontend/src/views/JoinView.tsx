@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useUsername } from '../hooks/useUsername'
-import { joinGame } from '../utils/joinGame'
+import { joinGameOnServer } from '../utils/joinGame'
 
 function JoinView() {
   const [username, setUsername] = useUsername()
