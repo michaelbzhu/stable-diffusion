@@ -4,6 +4,7 @@ import ImageGrid from './components/ImageGrid'
 import UserGuess from './components/UserGuess'
 import { generateImage } from './utils/generateImage'
 import GuesserView from './views/GuesserView'
+import PrompterView from './views/PrompterView'
 
 function App() {
   return (
