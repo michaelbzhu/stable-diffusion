@@ -46,8 +46,13 @@ def create_game():
     return game_id
 
 def join_game(game_id, username):
+    if game_id is None or username is None:
+        raise Exception("Inputs to join_game cannot be None!")
+        
     # Update number of users
     user_id = increment_counter("{}:num_users".format(game_id))
+
+    print(game_id, username, "{}:num_users".format(game_id))
 
     # Add username and score to the map
     users = get_dict("{}:users".format(game_id))

@@ -24,14 +24,14 @@ def join_game():
 
     return jsonify(db.join_game(game_id, username))
 
-@app.route("/state", methods=['GET'])
-def state():
-    game_id = request.form.get("game_id")
+@app.route("/state/<game_id>", methods=['GET'])
+def state(game_id):
     return jsonify(db.get_state(game_id))
 
 
-@app.route("/start_game/<game_id>", methods=['POST'])
-def start_game(game_id):
+@app.route("/start_game", methods=['POST'])
+def start_game():
+    game_id = request.form.get("game_id")   
     return jsonify(db.start_game(game_id))
 
 @app.route("/prompt", methods=['POST'])

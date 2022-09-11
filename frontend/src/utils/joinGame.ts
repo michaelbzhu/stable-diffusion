@@ -1,16 +1,8 @@
-export async function joinGameOnServer(id: number, username: string) {
-  const response = await fetch('http://35.247.125.51:5001/join_game', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      mode: 'no-cors',
-    },
-    body: `{
-        "username": ${username},
-        "game_id": ${id}
-    }`,
-  })
+import { request } from "./request"
 
-  return response.json()
+export async function joinGame(id: number, username: string): Promise<number> {
+  return await request('/join_game', 'POST', {
+    "username": username,
+    "game_id": id
+  })
 }

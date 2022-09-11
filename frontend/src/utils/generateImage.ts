@@ -1,22 +1,7 @@
-export async function generateImage() {
-  console.log('submitting')
-  const response = await fetch(
-    'http://35.247.125.51:5000/images/get-prediction',
-    {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        mode: 'no-cors',
-      },
-      body: `{
-         "prompt": china,
-        }`,
-    }
-  )
+import { request } from "./request"
 
-  response
-    .json()
+export async function generateImage() {
+  await request('/images/get-prediction', 'POST', {"prompt": "china"})
     .then((data) => {
       console.log(data)
       return data

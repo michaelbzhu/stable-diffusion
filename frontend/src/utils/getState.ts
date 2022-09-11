@@ -1,16 +1,5 @@
-export async function getState(gameId: number) {
-  const response = await fetch('http://localhost:5001/state/' + gameId.toString(), {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      mode: 'no-cors',
-    },
-  })
+import { request } from "./request";
 
-  response
-    .json()
-    .then((data) => {
-      return data
-    })
+export async function getState(gameId: number) {
+  return await request('/state/' + gameId.toString(), 'GET')
 }

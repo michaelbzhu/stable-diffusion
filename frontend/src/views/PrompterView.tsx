@@ -10,8 +10,6 @@ const PrompterView: FC = () => {
     setEnteredPrompt(true);
   }
 
-  
-
   return (
     <div className="App">
       <h2 className='text-black'>username: {userName}</h2>

@@ -1,12 +1,5 @@
-export async function createGame() {
-  const response = await fetch('http://35.247.125.51:5001/create_game', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      mode: 'no-cors',
-    },
-  })
+import { request } from "./request";
 
-  return response.json()
+export async function createGame(): Promise<number> {
+  return await request('/create_game', 'POST')
 }
