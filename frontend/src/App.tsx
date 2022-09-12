@@ -7,6 +7,7 @@ import { useUsername } from './hooks/useUsername'
 import { getState } from './utils/getState'
 import JoinView from './views/JoinView'
 import SetUsernameView from './views/SetUsernameView'
+import WaitingRoom from './views/WaitingRoom'
 
 export interface UsernameContextType {
   username: string | null,
@@ -51,7 +52,9 @@ function App() {
               <SetUsernameView/> :
               ids === null ?
                 <JoinView/> :
-                <><h1 className="text-gray-700">{JSON.stringify(state)}</h1></>
+                state.round_num === 0 ? 
+                  <WaitingRoom/> :
+                  <><h1 className="text-gray-700">{JSON.stringify(state)}</h1></>
           }
         </StateContext.Provider>
       </IdsContext.Provider>
